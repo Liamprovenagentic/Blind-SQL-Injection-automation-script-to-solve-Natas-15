@@ -1,10 +1,18 @@
-# Blind-SQL-Injection-automation-script-to-solve-Natas-15
-A blind SQL injection script designed to reveal the password to Natas 16.
+# Natas15 Blind SQL Injection Solver
 
-Natas15 (OverTheWire) is a blind boolean SQLi challenge — the login form only ever shows "This user exists!" or nothing, no error text, no password reflected back. You exploit that yes/no oracle to extract the password char by char using SUBSTRING/ASCII in the injected username field.
+Python script that solves OverTheWire Natas15 by exploiting a blind boolean
+SQL injection in the login form to extract natas16's password character by character.
 
-Core idea:
+## How it works
+Natas15's login only returns "This user exists!" or nothing — no errors,
+no password reflected. This script abuses that true/false oracle with
+`SUBSTRING(password, pos, 1) = 'x'` payloads injected via the username field,
+brute-forcing (or binary-searching) each character.
 
-username = natas16" AND SUBSTRING(password,1,1)="a
+## Usage
+pip install requests
+python solve.py --user natas15 --pass <natas15_password>
 
-If the page shows "This user exists!", your guess for character 1 is right. Iterate over every char position and every candidate char (or binary-search via ASCII(SUBSTRING(...)) > / < comparisons, much faster).
+## Example output
+...
+Recovered password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
